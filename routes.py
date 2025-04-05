@@ -31,3 +31,9 @@ def init_routes(app):
         if product:
             return jsonify(product)
         return jsonify({"error":"product not found"}),404
+    @app.route('/cart',methods=['GET'])
+    def get_cart():
+        if  not cart :
+            return jsonify({"message":"cart is empty"}),200
+        total=sum(item["price"] * item["quantity"] for item in cart)
+        return jsonify({"cart":cart,"total":total})
